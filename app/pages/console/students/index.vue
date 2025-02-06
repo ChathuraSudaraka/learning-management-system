@@ -5,12 +5,13 @@
         <!-- Header -->
         <div class="flex items-center justify-between">
           <div>
-            <h1 class="text-2xl font-semibold">Student Management</h1>
-            <p class="text-gray-600 dark:text-zinc-400">Manage student accounts and enrollments</p>
+            <h1 class="text-2xl font-semibold text-primary-900 dark:text-primary-100">Student Management</h1>
+            <p class="text-primary-600 dark:text-primary-400">Manage student accounts and enrollments</p>
           </div>
           <UButton 
             icon="i-heroicons-user-plus" 
             @click="showInviteModal = true"
+            color="primary"
           >
             Add Student
           </UButton>
@@ -23,11 +24,13 @@
             icon="i-heroicons-magnifying-glass-20-solid"
             placeholder="Search students..."
             class="max-w-sm"
+            color="primary"
           />
           <USelect
             v-model="status"
             :options="['All Status', 'Active', 'Pending', 'Suspended']"
             class="max-w-[200px]"
+            color="primary"
           />
         </div>
 
@@ -48,10 +51,10 @@
                 class="w-8 h-8 rounded-full"
               />
               <div>
-                <div class="font-medium">{{ row.name || '—' }}</div>
-                <div class="text-sm text-gray-500 dark:text-zinc-400">
+                <div class="font-medium text-primary-900 dark:text-primary-100">{{ row.name || '—' }}</div>
+                <div class="text-sm text-primary-600 dark:text-primary-400">
                   {{ row.email }}
-                  <span v-if="row.grade" class="ml-2 text-xs bg-gray-100 dark:bg-zinc-800 px-2 py-0.5 rounded">
+                  <span v-if="row.grade" class="ml-2 text-xs bg-primary-100 dark:bg-primary-900 px-2 py-0.5 rounded">
                     Grade {{ row.grade }}
                   </span>
                 </div>
@@ -82,7 +85,7 @@
               :popper="{ placement: 'bottom-end' }"
             >
               <UButton
-                color="gray"
+                color="primary"
                 variant="ghost"
                 icon="i-heroicons-ellipsis-horizontal-20-solid"
               />
@@ -100,6 +103,7 @@
               wrapper: 'gap-1',
               rounded: 'rounded-lg'
             }"
+            color="primary"
           />
         </div>
       </div>
