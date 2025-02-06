@@ -52,6 +52,22 @@
           </button>
         </div> -->
 
+        <!-- student's product points token balance -->
+        <div
+          class="flex items-center space-x-2 px-4 py-2 rounded-lg bg-primary-100/95 dark:bg-primary-900/90 border border-primary-200 dark:border-primary-800/30 group"
+          
+        >
+          <UIcon
+            name="material-symbols:star"
+            class="h-5 w-5 text-primary-500 dark:text-primary-400 group-hover:text-primary-600 dark:group-hover:text-primary-300 transition-colors"
+          />
+          <span
+            class="text-sm font-medium text-primary-700 dark:text-primary-300 group-hover:text-primary-800 dark:group-hover:text-primary-200 transition-colors"
+          >
+            <span class="font-bold">{{ pointsBalance }}</span> Points
+          </span>
+        </div>
+
         <!-- Theme Toggle -->
         <UButton
           icon="i-uil-sun"
@@ -72,13 +88,19 @@
 
         <!-- Profile Dropdown -->
         <UDropdown :items="profileItems" :popper="{ placement: 'bottom-end' }">
-          <button class="flex items-center space-x-2 p-1 rounded-lg hover:bg-slate-50 dark:hover:bg-zinc-800 transition-colors">
+          <button
+            class="flex items-center space-x-2 p-1 rounded-lg hover:bg-slate-50 dark:hover:bg-zinc-800 transition-colors"
+          >
             <img
-              :src="`https://ui-avatars.com/api/?name=${formatName(user?.name || user?.email)}&background=146de0&color=fff`"
+              :src="`https://ui-avatars.com/api/?name=${formatName(
+                user?.name || user?.email
+              )}&background=146de0&color=fff`"
               :alt="user?.name || user?.email"
               class="w-8 h-8 rounded-full"
             />
-            <span class="hidden md:block text-sm font-medium text-slate-700 dark:text-zinc-200 max-w-[120px] truncate">
+            <span
+              class="hidden md:block text-sm font-medium text-slate-700 dark:text-zinc-200 max-w-[120px] truncate"
+            >
               {{ formatDisplayText(user?.name || user?.email, 15) }}
             </span>
             <Icon
@@ -102,19 +124,19 @@ const toggleColorMode = () => {
 };
 
 const formatDisplayText = (text: string | null | undefined, maxLength = 20) => {
-  if (!text) return ''
-  return text.length > maxLength ? text.substring(0, maxLength) + '...' : text
-}
+  if (!text) return "";
+  return text.length > maxLength ? text.substring(0, maxLength) + "..." : text;
+};
 
 const formatName = (text: string | null | undefined) => {
-  if (!text) return 'U'
-  return text.split(/[@\s]/, 1)[0]?.substring(0, 2).toUpperCase()
-}
+  if (!text) return "U";
+  return text.split(/[@\s]/, 1)[0]?.substring(0, 2).toUpperCase();
+};
 
 const profileItems = computed(() => [
   [
     {
-      label: formatEmail(user.value?.email || ''),
+      label: formatEmail(user.value?.email || ""),
       slot: "email",
       disabled: true,
     },
@@ -143,13 +165,16 @@ const profileItems = computed(() => [
       click: () => signOut(),
     },
   ],
-])
+]);
 
 const formatEmail = (email: string, maxLength = 25) => {
-  if (!email || email.length <= maxLength) return email
-  const [local, domain] = email.split('@')
+  if (!email || email.length <= maxLength) return email;
+  const [local, domain] = email.split("@");
   if (!domain || !local) return email;
-  const shortenedLocal = local.substring(0, maxLength - domain.length - 2) + '...'
-  return `${shortenedLocal}@${domain}`
-}
+  const shortenedLocal =
+    local.substring(0, maxLength - domain.length - 2) + "...";
+  return `${shortenedLocal}@${domain}`;
+};
+
+const pointsBalance = ref(2000); // Replace with actual points balance logic
 </script>

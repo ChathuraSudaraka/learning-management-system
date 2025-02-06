@@ -1,10 +1,11 @@
 <template>
     <div class="space-y-6">
         <div class="space-y-4">
-            <h1 class="text-2xl font-semibold">Student Lessons</h1>
-            
-            <!-- Lessons Filter -->
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div class="sm:col-span-3 space-y-1">
+                    <h1 class="text-2xl font-semibold">Student Lessons</h1>
+                    <p class="text-gray-600 dark:text-zinc-400">Access your course materials, track your progress, and complete interactive lessons</p>
+                </div>
                 <UInput
                     v-model="searchQuery"
                     icon="i-heroicons-magnifying-glass-20-solid"

@@ -1,53 +1,46 @@
 <template>
     <NuxtLayout name="console">
-        <div class="max-w-7xl mx-auto py-6 space-y-6">
+        <div class="max-w-7xl mx-auto  space-y-6">
             <!-- Header -->
-            <div class="bg-white dark:bg-zinc-800 rounded-lg shadow-sm border border-gray-200 dark:border-zinc-700 p-6">
+            <div >
                 <div class="flex items-center justify-between">
                     <div class="space-y-1">
                         <h1 class="text-2xl font-semibold">Points Withdrawal History</h1>
-                        <p class="text-gray-600 dark:text-zinc-400">Track your points redemption and product orders</p>
+                        <p class="text-gray-600 dark:text-zinc-400">View your points redemption history and track the status of your product orders</p>
                     </div>
-                    <div class="flex items-center space-x-2 bg-blue-100 dark:bg-blue-900/30 px-4 py-2 rounded-lg">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-500" viewBox="0 0 20 20" fill="currentColor">
-                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                        </svg>
-                        <span class="text-lg font-bold text-blue-700 dark:text-blue-400">{{ totalPoints }} Points</span>
-                    </div>
+                    
                 </div>
             </div>
 
             <!-- Filters -->
             <div class="flex gap-4 items-center">
-                <div class="flex-1 relative">
-                    <input 
-                        v-model="searchQuery"
-                        type="text"
-                        placeholder="Search products..."
-                        class="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent"
-                    />
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-zinc-500" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
-                    </svg>
-                </div>
-                <select 
+                <UInput
+                    v-model="searchQuery"
+                    icon="i-heroicons-magnifying-glass-20-solid"
+                    color="gray"
+                    placeholder="Search products..."
+                    class="flex-1"
+                />
+                <USelect
                     v-model="statusFilter"
-                    class="px-4 py-2 rounded-lg border border-gray-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent"
-                >
-                    <option value="all">All Status</option>
-                    <option value="pending">Pending</option>
-                    <option value="completed">Completed</option>
-                    <option value="cancelled">Cancelled</option>
-                </select>
-                <select 
+                    :options="[
+                        { label: 'All Status', value: 'all' },
+                        { label: 'Pending', value: 'pending' },
+                        { label: 'Completed', value: 'completed' },
+                        { label: 'Cancelled', value: 'cancelled' }
+                    ]"
+                    color="gray"
+                />
+                <USelect
                     v-model="sortBy"
-                    class="px-4 py-2 rounded-lg border border-gray-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent"
-                >
-                    <option value="date-desc">Newest First</option>
-                    <option value="date-asc">Oldest First</option>
-                    <option value="points-desc">Highest Points</option>
-                    <option value="points-asc">Lowest Points</option>
-                </select>
+                    :options="[
+                        { label: 'Newest First', value: 'date-desc' },
+                        { label: 'Oldest First', value: 'date-asc' },
+                        { label: 'Highest Points', value: 'points-desc' },
+                        { label: 'Lowest Points', value: 'points-asc' }
+                    ]"
+                    color="gray"
+                />
             </div>
 
             <!-- Withdrawals Table -->

@@ -8,11 +8,21 @@
 
         <!-- Main Content -->
         <div class="pt-24 pb-12 px-4 sm:px-6 lg:px-8">
-            <div class="max-w-7xl mx-auto">
+            <div class="max-w-7xl mx-auto space-y-6">
+                <!-- Quiz Progress - Shows at top on mobile -->
+                <div class="block lg:hidden">
+                    <QuizProgress
+                        :currentQuestion="currentQuestionIndex + 1"
+                        :totalQuestions="quiz.questions.length"
+                        :answeredQuestions="answeredQuestionIndexes"
+                        @jump="jumpToQuestion"
+                    />
+                </div>
+
                 <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
                     <!-- Quiz Questions -->
                     <div class="lg:col-span-3">
-                        <div class="bg-white dark:bg-zinc-800 rounded-lg shadow-sm border border-gray-200 dark:border-zinc-700 p-6">
+                        <div class="bg-white dark:bg-zinc-800 rounded-lg shadow-sm border border-zinc-200 dark:border-zinc-700 p-6">
                             <QuizQuestion
                                 :question="currentQuestion"
                                 :currentNumber="currentQuestionIndex + 1"
@@ -25,8 +35,8 @@
                         </div>
                     </div>
 
-                    <!-- Quiz Progress -->
-                    <div class="lg:col-span-1">
+                    <!-- Quiz Progress - Hidden on mobile, shows on desktop -->
+                    <div class="hidden lg:block lg:col-span-1">
                         <QuizProgress
                             :currentQuestion="currentQuestionIndex + 1"
                             :totalQuestions="quiz.questions.length"
@@ -61,17 +71,18 @@ const router = useRouter()
 // Mock quiz data - replace with actual API call
 const quiz = ref({
     id: route.params.id,
-    title: 'Sample Quiz',
+    title: 'Vue.js Fundamentals Quiz',
     duration: 30, // in minutes
     questions: [
         {
             id: 1,
-            text: 'What is Vue.js?',
+            text: 'What is the Vue.js reactivity system doing in this image?',
+            image: 'https://placehold.co/800x400/indigo/white/png?text=Vue+Reactivity+System',
             options: [
-                { id: 'a', text: 'A backend framework' },
-                { id: 'b', text: 'A progressive JavaScript framework for building user interfaces' },
-                { id: 'c', text: 'A database management system' },
-                { id: 'd', text: 'A testing framework' }
+                { id: 'a', text: 'Two-way data binding between the model and view' },
+                { id: 'b', text: 'One-way data flow from parent to child components' },
+                { id: 'c', text: 'Event handling system for user interactions' },
+                { id: 'd', text: 'Component lifecycle management' }
             ]
         },
         {
@@ -86,82 +97,45 @@ const quiz = ref({
         },
         {
             id: 3,
-            text: 'What is Vuex used for?',
+            text: 'Looking at this Vuex state management diagram, what is the correct flow of data?',
+            image: 'https://placehold.co/800x400/indigo/white/png?text=Vuex+State+Management+Flow',
             options: [
-                { id: 'a', text: 'State management' },
-                { id: 'b', text: 'Routing' },
-                { id: 'c', text: 'Form validation' },
-                { id: 'd', text: 'API calls' }
+                { id: 'a', text: 'Actions → Mutations → State → Vue Components' },
+                { id: 'b', text: 'Vue Components → Actions → Mutations → State' },
+                { id: 'c', text: 'State → Mutations → Actions → Vue Components' },
+                { id: 'd', text: 'Vue Components → Mutations → State → Actions' }
             ]
         },
         {
             id: 4,
-            text: 'Which lifecycle hook is called after the component is mounted?',
+            text: 'Based on this component lifecycle diagram, which hook is called after the component is mounted?',
+            image: 'https://placehold.co/800x400/indigo/white/png?text=Vue+Lifecycle+Hooks',
             options: [
                 { id: 'a', text: 'created' },
                 { id: 'b', text: 'beforeMount' },
                 { id: 'c', text: 'mounted' },
-                { id: 'd', text: 'updated' }
+                { id: 'd', text: 'beforeUpdate' }
             ]
         },
         {
             id: 5,
-            text: 'What is the composition API?',
+            text: 'What is the purpose of Vue Router in a Vue.js application?',
             options: [
-                { id: 'a', text: 'A way to compose music in Vue' },
-                { id: 'b', text: 'A new way to organize component logic in Vue 3' },
-                { id: 'c', text: 'A routing system' },
-                { id: 'd', text: 'A testing framework' }
+                { id: 'a', text: 'Client-side routing and navigation' },
+                { id: 'b', text: 'Server-side data fetching' },
+                { id: 'c', text: 'Component styling' },
+                { id: 'd', text: 'Form validation' }
             ]
         },
         {
             id: 6,
-            text: 'Which of these is NOT a Vue directive?',
+            text: 'Looking at this Vue DevTools screenshot, what type of component communication is being used?',
+            image: 'https://placehold.co/800x400/indigo/white/png?text=Vue+DevTools+Communication',
             options: [
-                { id: 'a', text: 'v-if' },
-                { id: 'b', text: 'v-show' },
-                { id: 'c', text: 'v-loop' },
-                { id: 'd', text: 'v-else' }
-            ]
-        },
-        {
-            id: 7,
-            text: 'What is the purpose of Vue Router?',
-            options: [
-                { id: 'a', text: 'To manage state' },
-                { id: 'b', text: 'To handle routing in Vue applications' },
-                { id: 'c', text: 'To make API calls' },
-                { id: 'd', text: 'To validate forms' }
-            ]
-        },
-        {
-            id: 8,
-            text: 'Which method is used to create a new Vue application?',
-            options: [
-                { id: 'a', text: 'new Vue()' },
-                { id: 'b', text: 'createApp()' },
-                { id: 'c', text: 'Vue.create()' },
-                { id: 'd', text: 'makeVue()' }
-            ]
-        },
-        {
-            id: 9,
-            text: 'What is the purpose of computed properties in Vue?',
-            options: [
-                { id: 'a', text: 'To compute mathematical calculations' },
-                { id: 'b', text: 'To cache and update values based on their dependencies' },
-                { id: 'c', text: 'To style components' },
-                { id: 'd', text: 'To make API calls' }
-            ]
-        },
-        {
-            id: 10,
-            text: 'Which of these is a valid way to emit an event in Vue?',
-            options: [
-                { id: 'a', text: 'this.emit("event")' },
-                { id: 'b', text: 'emit.event()' },
-                { id: 'c', text: '$emit("event")' },
-                { id: 'd', text: 'event.emit()' }
+                { id: 'a', text: 'Props and Events' },
+                { id: 'b', text: 'Vuex Store' },
+                { id: 'c', text: 'Provide/Inject' },
+                { id: 'd', text: 'Event Bus' }
             ]
         }
     ]
